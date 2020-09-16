@@ -9,7 +9,8 @@ const app = express();
 
 // routes
 import users from './routes/users';
-import tag from './routes/tag';
+import hashtag from './routes/hashtag';
+import common from './routes/common';
 
 app.use(cors());
 app.use(helmet());
@@ -20,7 +21,8 @@ app.get('/', (req, res) => {
   return res.json({ msg: '🎉' });
 });
 
-app.use('/api/tag', tag);
+app.use('/api/tag', hashtag);
 app.use('/api/users/', users);
+app.use('/api/common', common);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
