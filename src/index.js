@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   return res.json({ msg: '🎉' });
 });
 
-app.use('/api/tag', hashtag);
+app.use('/api/hashtag', hashtag);
 app.use('/api/users/', users);
 app.use('/api/common', common);
 

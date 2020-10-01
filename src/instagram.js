@@ -8,7 +8,4 @@ const client = new Instagram({ username, password, cookieStore });
 
 client.login().then((res) => console.log(res));
 
-/* (async () => {
-  await client.login();
-})(); */
 export default client;

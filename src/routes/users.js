@@ -11,13 +11,13 @@ router.get('/:username', async (req, res) => {
     const photosData = await client.getPhotosByUsername({
       username: req.params.username,
     });
-    const stories = await client.getStoryItemsByUsername({
+    /* const stories = await client.getStoryItemsByUsername({
       username: req.params.username,
-    });
+    }); */
     const photos = photosData.user.edge_owner_to_timeline_media;
     return res.json({
       user,
-      stories,
+      // stories,
       photos,
     });
   } catch (err) {
