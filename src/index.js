@@ -10,6 +10,7 @@ const app = express();
 // routes
 import users from './routes/users';
 import hashtag from './routes/hashtag';
+import place from './routes/place';
 import common from './routes/common';
 
 app.use(cors());
@@ -22,7 +23,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/hashtag', hashtag);
-app.use('/api/users/', users);
+app.use('/api/users', users);
 app.use('/api/common', common);
+app.use('/api/place', place);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

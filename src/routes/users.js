@@ -58,4 +58,21 @@ router.get('/:username/following/:count?', async (req, res) => {
   }
 });
 
+router.get('/user/me', async (req, res) => {
+  try {
+    const me = await client.getProfile();
+    const user = await client.getUserByUsername({
+      username: me.username,
+    });
+    const following = await client.getFollowings({
+      userId: user.id,
+      first: req.params.count ? req.params.count : 20,
+    });
+    return res.json({ me, user, following });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(400).json({ error: err.message });
+  }
+});
+
 export default router;

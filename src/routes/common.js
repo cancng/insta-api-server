@@ -3,6 +3,16 @@ const router = express.Router();
 
 import client from '../instagram';
 
+router.get('/feed',async (req,res) => {
+  try {
+  	const feed = await client.getHome();
+  	return res.json(feed)
+  } catch (err) {
+  	console.log(err.message);
+    return res.status(400).json({ error: err.message });
+  }
+})
+
 router.get('/search/:query/:context?', async (req, res) => {
   try {
     let context = '';
