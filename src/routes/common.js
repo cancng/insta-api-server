@@ -3,15 +3,15 @@ const router = express.Router();
 
 import client from '../instagram';
 
-router.get('/feed',async (req,res) => {
+router.get('/feed', async (req, res) => {
   try {
-  	const feed = await client.getHome();
-  	return res.json(feed)
+    const feed = await client.getHome();
+    return res.json(feed);
   } catch (err) {
-  	console.log(err.message);
+    console.log(err.message);
     return res.status(400).json({ error: err.message });
   }
-})
+});
 
 router.get('/search/:query/:context?', async (req, res) => {
   try {
@@ -31,6 +31,18 @@ router.get('/search/:query/:context?', async (req, res) => {
         break;
     }
     const result = await client.search({ query: req.params.query, context });
+    return res.json(result);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(400).json({ error: err.message });
+  }
+});
+
+router.get('/media/:shortcode', async (req, res) => {
+  try {
+    const result = await client.getMediaByShortcode({
+      shortcode: req.params.shortcode,
+    });
     return res.json(result);
   } catch (err) {
     console.log(err.message);
