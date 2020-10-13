@@ -6,27 +6,27 @@ const { INSTA_USERNAME: username, INSTA_PASSWORD: password } = process.env;
 const cookieStore = new FileCookieStore('./cookies.json');
 const client = new Instagram({ username, password, cookieStore });
 
-client
+/*client
   .login()
   .then((res) => console.log(res))
   .catch((err) => {
     if (err.error && err.error.message === 'checkpoint_required') {
+      const challengeUrl = err.error.checkpoint_url
       console.log('2FA hata', err.message);
+      console.log(err.error.checkpoint_url)
     }
-  });
+  });*/
 
-/*const login = async () => {
-  const client = new Instagram({ username, password, cookieStore });
+(async () => {
   try {
-    await client.login();
+    const loginResponse = await client.login();
+    console.log('LOGIN RESPONSE: ', loginResponse);
   } catch (err) {
-    if (err.error && err.error.message === 'checkpoint_required') {
-      const challengeUrl = err.error.checkpoint_url;
-
-      await client.updateChallenge({ challengeUrl, choice: 1 });
-      await client.updateChallenge({ challengeUrl, securityCode: '301794' }); // <== securityCode - set code from email.
-    }
+    const challengeUrl = err.error.checkpoint_url;
+    await client.updateChallenge({ challengeUrl, choice: 1 });
+    // await client.updateChallenge({ challengeUrl, securityCode: '034192' });
+    console.log(err.message);
   }
-};*/
+})();
 
 export default client;
