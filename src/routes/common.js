@@ -13,25 +13,22 @@ router.get('/feed', async (req, res) => {
   }
 });
 
-router.get('/search/:query/:context?', async (req, res) => {
+router.get('/search/:query', async (req, res) => {
   try {
-    let context = '';
-    switch (req.params.context) {
-      case 'hashtag':
-        context = 'hashtag';
-        break;
-      case 'place':
-        context = 'place';
-        break;
-      case 'user':
-        context = 'user';
-        break;
-      default:
-        context = 'blended';
-        break;
-    }
-    const result = await client.search({ query: req.params.query, context });
-    return res.json(result);
+    const users = await client.search({
+      query: req.params.query,
+      context: 'user',
+    });
+    const hashtag = await client.search({
+      query: req.params.query,
+      context: 'hashtag',
+    });
+    const places = await client.search({
+      query: req.params.query,
+      context: 'place',
+    });
+    return res.json({ users, hashtag, places });
+    // const result = await client.search({ query: req.params.query, context });
   } catch (err) {
     console.log(err.message);
     return res.status(400).json({ error: err.message });
